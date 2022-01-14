@@ -1,12 +1,9 @@
-import {
-    createServer,
-    IncomingMessage,
-    ServerResponse,
-    Server, OutgoingMessage
-} from "http";
+import * as http from "http";
+import Router from './Router';
+
 
 // Request callback
-type RequestCallback = (req: IncomingMessage, res: ServerResponse) => void;
+type RequestCallback = (req: http.IncomingMessage, res: http.ServerResponse) => void;
 
 
 export class HttpServer {
@@ -14,24 +11,22 @@ export class HttpServer {
     public port: number = 8081;
     public host: string = '0.0.0.0';
     private server: null | Server = null;
-    private getRoutes: Map<string, RequestCallback> = new Map;
-    private postRoutes: Map<string, RequestCallback> = new Map;
-
+    private routes: Map<string, Router> = new Map;
 
     /**
-     * Get listener
-     * @param route
+     * Register new router for the router
+     * @param path
+     * @param router
      */
-    public get = (path: string, callback: RequestCallback): void => {
-        this.getRoutes.set(path, callback)
+    public registerRoute = (path: string, router: Router): void => {
+
     }
 
-    public post = ( path : string , callback: RequestCallback): void => {
-        this.postRoutes.set(path, callback)
-    }
-
+    /**
+     * Run http server
+     */
     public run = (): void => {
-        this.server = createServer(  (req : IncomingMessage, res: ServerResponse): void => {
+        this.server = http.createServer(  (req : http.IncomingMessage, res: http.ServerResponse): void => {
             switch (req.method){
                 case 'GET':
                     break;
@@ -41,7 +36,6 @@ export class HttpServer {
                     console.log('Unknown method')
             }
         })
-
         this.server.listen(this.port, this.host)
     }
 

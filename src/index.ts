@@ -1,3 +1,9 @@
-import * as ws from 'ws'
+import {HttpServer} from "./restful/HttpServer";
 
-console.log('Hello world!')
+const server = new HttpServer()
+
+server.get('xx' , (req, res) => {
+    console.log(req)
+})
+
+
