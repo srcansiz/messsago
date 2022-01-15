@@ -18,7 +18,7 @@ export class HttpServer {
      * @param path
      * @param router
      */
-    public registerRoute = (path: string, router: Router): void => {
+    public route = (path: string, router: Router ): void => {
 
     }
 
