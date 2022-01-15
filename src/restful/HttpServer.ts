@@ -22,21 +22,9 @@ export class HttpServer {
 
     }
 
-    /**
-     * Run http server
-     */
-    public run = (): void => {
-        this.server = http.createServer(  (req : http.IncomingMessage, res: http.ServerResponse): void => {
-            switch (req.method){
-                case 'GET':
-                    break;
-                case 'POST':
-                    break;
-                default:
-                    console.log('Unknown method')
-            }
-        })
-        this.server.listen(this.port, this.host)
+    private routeRequest = (req: http.IncomingMessage, res:http.ServerResponse) => {
+        // @ts-ignore
+        let url = new URL(req.url)
     }
 
     private register_route = (): void | null => {
@@ -45,5 +33,16 @@ export class HttpServer {
 
     private remove_route = (): void | null => {
         return null
+    }
+
+    /**
+     * Run http server
+     */
+    public run = (): void => {
+        this.server = http.createServer(
+            (req : http.IncomingMessage, res: http.ServerResponse): void => {
+            this.routeRequest(req,res)
+        })
+        this.server.listen(this.port, this.host)
     }
 }
