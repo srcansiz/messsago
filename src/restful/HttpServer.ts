@@ -10,7 +10,7 @@ export class HttpServer {
 
     public port: number = 8081;
     public host: string = '0.0.0.0';
-    private server: null | Server = null;
+    private server: null | http.Server = null;
     private routes: Map<string, Router> = new Map;
 
     /**
