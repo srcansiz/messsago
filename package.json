@@ -2,10 +2,14 @@
   "name": "massago",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "input": "./src/index.ts",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "typings": "./dist/index.d.ts",
   "scripts": {
-    "test": "echo \\\"Error: no tests specified\\\" && exit 1",
-    "start:dev": "nodemon"
+    "build": "npx tsc",
+    "start": "node dist/index.js",
+    "dev": "concurrently \"npx tsc --watch\" \"nodemon -q dist/index.js\""
   },
   "keywords": [],
   "author": "",
@@ -13,7 +17,8 @@
   "devDependencies": {
     "@types/node": "^17.0.7",
     "@types/ws": "^8.2.2",
-    "nodemon": "^2.0.15",
+    "concurrently": "^7.3.0",
+    "nodemon": "^2.0.19",
     "ts-node": "^10.4.0",
     "typescript": "^4.5.4",
     "ws": "^8.8.1"

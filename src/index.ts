@@ -1,22 +1,9 @@
-import {HttpServer} from "./restful/HttpServer";
-const WebSocket = require('ws');
+import * as http from "http";
+import {MessagoServer} from "./Server";
 
 
-const defaultConfiguration = {
-    port    : 8585,
-    host    : 8080,
-    server :  null
-}
+const server = http.createServer()
 
-export default class Messago {
+const messago = new MessagoServer({server: server})
 
-
-}
-
-const server = new HttpServer()
-const s = server.run()
-
-s.on('upgrade', (req, socket, head) => {
-
-})
-
+messago.run()
