@@ -6,7 +6,7 @@ import Router from './Router';
 type RequestCallback = (req: http.IncomingMessage, res: http.ServerResponse) => void;
 
 
-export class HttpServer {
+export class HttpServer extends http {
 
     public port: number = 8081;
     public host: string = '0.0.0.0';
@@ -38,11 +38,14 @@ export class HttpServer {
     /**
      * Run http server
      */
-    public run = (): void => {
+    public run = (): http.Server => {
         this.server = http.createServer(
             (req : http.IncomingMessage, res: http.ServerResponse): void => {
             this.routeRequest(req,res)
         })
+
         this.server.listen(this.port, this.host)
+
+        return(this.server)
     }
 }

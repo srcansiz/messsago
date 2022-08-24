@@ -1,5 +1,5 @@
 import {HttpServer} from "./restful/HttpServer";
-
+const WebSocket = require('ws');
 
 
 const defaultConfiguration = {
@@ -14,9 +14,9 @@ export default class Messago {
 }
 
 const server = new HttpServer()
+const s = server.run()
 
-server.get('xx' , (req, res) => {
-    console.log(req)
+s.on('upgrade', (req, socket, head) => {
+
 })
-
 
