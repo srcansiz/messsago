@@ -11,12 +11,24 @@ export class WSClient {
         this.id = id
         this.client = client
         this.auth_hook = auth_hook
-    }
 
-    static auth = () => {
 
     }
 
+    /**
+     * Handler for client each time receives a data from remote client
+     * @param message {string}
+     */
+    private onMessageHandler = (message: string) => {
+
+    }
+
+    /**
+     * Handler for client disconnect
+     */
+    private onDisconnectHandler = () => {
+
+    }
 
 
 }
