@@ -1,7 +1,7 @@
 import {Server as HttpServer} from "http";
 import {Server, WebSocket } from "ws";
 
-
+export type WebSocketClient = WebSocket
 
 export interface ServerOptions  {
     port?: number
