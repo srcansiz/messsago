@@ -4,8 +4,8 @@
   "private": true,
   "type": "module",
   "workspaces": [
-    "packages/client",
-    "packages/server"
+    "packages/server",
+    "packages/example"
   ],
   "description": "",
   "keywords": [],
@@ -16,6 +16,9 @@
     "dev": "lerna run dev --scope={server}"
   },
   "devDependencies": {
-    "lerna": "^5.5.0"
+    "lerna": "^5.5.0",
+    "@types/node": "^17.0.7",
+    "@types/ws": "^8.2.2",
+    "concurrently": "^7.3.0"
   }
 }

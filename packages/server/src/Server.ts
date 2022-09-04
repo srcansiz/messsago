@@ -25,7 +25,7 @@ export class MessagoServer {
      * Run MessagoServer
      */
     public run = () => {
-
+        console.log('HEYYYYY')
         const id = Date.now()
         const headers = [
             'HTTP/1.1 101 Web Socket Protocol Handshake',
@@ -37,13 +37,13 @@ export class MessagoServer {
         const ws = new Server({ noServer: true })
 
         // WebSocket connection event
-        ws.on('connection', socket => {
-            socket.on('message', message => console.log(message));
+        ws.on('connection', (socket: any) => {
+            socket.on('message', (message: string) => console.log(message));
         })
 
 
         // HTTP server upgrade
-        this.server.on('upgrade' , ( req, socket,  head ) => {
+        this.server.on('upgrade' , ( req: any, socket: any,  head:any ) => {
             ws.handleUpgrade( req , socket, head, (socket: WebSocket)  => {
                 ws.emit('connection', socket, req)
             })
@@ -51,7 +51,7 @@ export class MessagoServer {
 
         // Listen server
         this.server.listen(this.port, () : void => {
-            console.info(`Server haas started on port ${this.port}`)
+            console.log(`Server haas started on port ${this.port}`)
         })
     }
 }

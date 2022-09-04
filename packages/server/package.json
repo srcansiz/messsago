@@ -2,7 +2,6 @@
   "name": "@massago/server",
   "version": "1.0.0",
   "description": "",
-  "input": "./src/index.ts",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "typings": "./dist/index.d.ts",
@@ -11,6 +10,13 @@
     "start": "node dist/index.js",
     "dev": "concurrently \"npx tsc --watch\" \"nodemon -q dist/index.js\""
   },
+  "directories": {
+    "dist": "dist",
+    "test": "__tests__"
+  },
+  "files":  [
+    "dist"
+  ],
   "keywords": [],
   "author": "",
   "license": "ISC",
