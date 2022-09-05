@@ -18,8 +18,9 @@
   },
   "scripts": {
     "test": "node ./__tests__/example.test.js",
-    "build": "tsc --build",
-    "dev": "nodemon --exec ts-node ./src/index.ts --watch src --ext .ts"
+    "build": "npm run clean && npm run complie",
+    "complie": "tsc --build",
+    "dev": "ts-node ./src/index.ts"
   },
   "bugs": {
     "url": "https://github.com/sergencansiz/messsago/issues"

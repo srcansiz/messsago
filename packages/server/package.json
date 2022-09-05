@@ -6,7 +6,10 @@
   "module": "./dist/index.mjs",
   "typings": "./dist/index.d.ts",
   "scripts": {
-    "build": "tsc --build"
+    "build": "npm run clean && npm run complie",
+    "clean": "rm -rf ./dist && rm -rf tsconfig.build.tsbuildinfo",
+    "compile": "tsc --build",
+    "compile:watch": "tsc"
   },
   "directories": {
     "dist": "dist",

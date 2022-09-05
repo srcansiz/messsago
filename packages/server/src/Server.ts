@@ -25,7 +25,6 @@ export class MessagoServer {
      * Run MessagoServer
      */
     public run = () => {
-        console.log('HEYYYYY')
         const id = Date.now()
         const headers = [
             'HTTP/1.1 101 Web Socket Protocol Handshake',
@@ -48,6 +47,7 @@ export class MessagoServer {
                 ws.emit('connection', socket, req)
             })
         })
+
 
         // Listen server
         this.server.listen(this.port, () : void => {

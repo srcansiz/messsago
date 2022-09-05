@@ -1,4 +1,5 @@
 {
+  "name": "@messago/messago",
   "version": "1.0.0",
   "private": true,
   "type": "module",
@@ -12,7 +13,9 @@
   "license": "ISC",
   "scripts": {
     "start": "lerna run start --scope={server}",
-    "dev": "lerna run dev --scope={server}"
+    "compile-serer:watch": "nodemon --exec lerna run compile:watch --watch packages",
+    "start-example:watch":  "nodemon --exec lerna run dev --scope=@messago/example --watch packages",
+    "dev-server": "concurrently \"npm run compile-serer:watch\" \"npm run start-example:watch\""
   },
   "devDependencies": {
     "@types/node": "^17.0.7",
