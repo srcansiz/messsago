@@ -12,6 +12,7 @@
   "author": "",
   "license": "ISC",
   "scripts": {
+    "clean": "rm -rf ./node_modules && rm -rf package-lock.json",
     "start": "lerna run start --scope={server}",
     "compile-serer:watch": "nodemon --exec lerna run compile:watch --watch packages",
     "start-example:watch":  "nodemon --exec lerna run dev --scope=@messago/example --watch packages",
