@@ -1,5 +1,6 @@
 import {Server as HttpServer} from "http";
 import {Server, WebSocket } from "ws";
+import {WSClient} from "./WSClient";
 
 export type WebSocketClient = WebSocket
 
@@ -14,6 +15,7 @@ export class MessagoServer {
     protected port: number
     protected host: string
     protected server: HttpServer
+    protected clients: WSClient[] = []
 
     constructor(options: ServerOptions) {
         this.server = options.server
@@ -25,7 +27,6 @@ export class MessagoServer {
      * Run MessagoServer
      */
     public run = () => {
-        const id = Date.now()
         const headers = [
             'HTTP/1.1 101 Web Socket Protocol Handshake',
             'Upgrade: WebSocket',
@@ -37,9 +38,13 @@ export class MessagoServer {
 
         // WebSocket connection event
         ws.on('connection', (socket: any) => {
-            socket.on('message', (message: string) => console.log(message));
+            let client = new WSClient(socket)
+            this.clients.push(client)
         })
 
+        ws.on('error', (error => {
+            console.log(error)
+        }))
 
         // HTTP server upgrade
         this.server.on('upgrade' , ( req: any, socket: any,  head:any ) => {
@@ -47,7 +52,6 @@ export class MessagoServer {
                 ws.emit('connection', socket, req)
             })
         })
-
 
         // Listen server
         this.server.listen(this.port, () : void => {

@@ -5,7 +5,4 @@ const server = http.createServer()
 
 const messago = new MessagoServer({server: server})
 
-console.log('HEYYYYY')
-console.log('HEYYYYY')
-console.log('HEYYYYY')
 messago.run()
