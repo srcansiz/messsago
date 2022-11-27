@@ -1,21 +1,9 @@
+import {Message} from "../types";
+import {MessageData} from "../types";
+
 const messageDataTag: unique symbol = Symbol("MessageDataTag");
 const messageTag: unique symbol = Symbol("MessageTag");
 
-/**
- * Type for data in the message
- */
-type MessageData = {
-    m: string
-    o: any
-}
-
-/**
- * Type for message
- */
-type Message = {
-    t: string
-    d: MessageData
-}
 
 type ValidatorResult = {
     status: boolean
@@ -26,17 +14,25 @@ type ValidatorResult = {
 class Validator {
 
 
-    public validate = (data: Buffer) : ValidatorResult => {
+    private messageTypes: string[] = ["message", "file", "sound"]
 
-        let d
+
+    /**
+     * Validates message
+     * @param data {Buffer}
+     * @param onError {Function}
+     */
+    public validate = (data: Buffer, onError: Function): Message | null => {
+
         try {
-            d = this.validate_json(data)
-            d = this.validate_schema(d)
+           return this.validate_schema(
+               this.validate_json(data)
+            )
         }catch (e: any){
-            return {status: false, data: e}
+            onError(e)
         }
 
-        return {status: true, data: d}
+        return null
     }
 
 
@@ -45,16 +41,12 @@ class Validator {
      * @param data {Buffer}
      */
     private validate_json = (data: Buffer) : Message => {
-
-        let d
-
         try {
-            d = JSON.parse(data.toString())
+            return JSON.parse(data.toString())
         }
         catch (e) {
             throw 'Received data is not JSON serializable'
         }
-        return d
     }
 
     /**
@@ -66,7 +58,11 @@ class Validator {
         if('t' in data && typeof data.t === "string" &&
             'd' in data && typeof data.d === "object"
         ){
-            return data
+            if(this.messageTypes.includes(data.t)){
+                return data
+            }
+
+            throw  'Invalıd message type.'
         }else{
             throw 'Message data is not well formatted'
         }
