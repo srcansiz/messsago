@@ -1,7 +1,7 @@
 import {WebSocketClient} from "./Server";
 import {randomUUID} from "crypto";
 import Validator from "./utils/validator";
-
+import Controller from "./Controller"
 
 type WSClientErrorMessage = {
     t: string,
@@ -14,7 +14,9 @@ export class WSClient {
     public client: WebSocketClient
 
     private validator: Validator
-    private message_types: string[] = ["message", "file", "sound"]
+    private MController: Controller = new Controller()
+
+
 
     constructor(client: WebSocketClient) {
         this.id = randomUUID()
@@ -31,16 +33,12 @@ export class WSClient {
      * @param message {string}
      */
     private onMessageHandler = (message: Buffer) => {
-        let {status, data} = this.validator.validate(message)
-        if(!status){
-            if(typeof data === "string") this.send_error(data)
-            return
-        }
 
-        if(!(data.t in this.message_types)){
-            this.send_error('Unrecognized message type')
-        }
+        let data = this.validator.validate(message, this.send_error)
 
+        if (data){
+            return this.MController.parse(data)
+        }
     }
 
     /**
@@ -49,10 +47,6 @@ export class WSClient {
     private onDisconnectHandler = (event: number, reason: Buffer) => {
         console.log('Client disconnected')
         console.log(event, reason.toString())
-    }
-
-    private m = (event: string, ) => {
-
     }
 
     private send = (message: Object | WSClientErrorMessage) => {
