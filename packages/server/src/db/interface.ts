@@ -9,7 +9,10 @@ interface IConversation {
  *
  */
 interface IUser {
+    id: string
     name: string
+    last_token: string,
+    email: string
 }
 
 /**
