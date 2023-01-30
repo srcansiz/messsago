@@ -10,11 +10,11 @@ type TEvents = {[key: string] : Set<(data: EventData) => void>}
 
 
 /**
- *
+ * Custom event emitter for LocalPresence
  */
-class LocalEmitter {
+export default class EventEmitter {
 
-    private events: TEvents
+    private readonly events: TEvents
 
     constructor() {
         this.events = {}
@@ -31,7 +31,7 @@ class LocalEmitter {
     }
 
     /**
-     *
+     * Execute event once
      * @param type
      * @param listener
      */
