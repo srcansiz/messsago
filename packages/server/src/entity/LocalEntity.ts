@@ -1,7 +1,7 @@
 import EventEmitter from "../utils/EventEmitter";
 import Entity from "./Entity";
 
-class LocalEntity implements Entity {
+export default class LocalEntity implements Entity {
 
     private topics = new EventEmitter()
 

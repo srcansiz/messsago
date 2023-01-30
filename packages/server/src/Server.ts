@@ -1,6 +1,9 @@
 import {Server as HttpServer} from "http";
 import {Server, WebSocket } from "ws";
 import {WSClient} from "./WSClient";
+import Entity from "./entity/Entity";
+import LocalEntity from "./entity/LocalEntity"
+
 
 export type WebSocketClient = WebSocket
 
@@ -8,6 +11,7 @@ export interface ServerOptions  {
     port?: number
     host?: string
     server: HttpServer
+    entity?: Entity
 }
 
 export class MessagoServer {
@@ -16,11 +20,14 @@ export class MessagoServer {
     protected host: string
     protected server: HttpServer
     protected clients: WSClient[] = []
+    protected entity: Entity
 
     constructor(options: ServerOptions) {
         this.server = options.server
         this.port = options.port ? options.port : 8080
         this.host = options.host ? options.host : 'localhost'
+
+        this.entity = options.entity || new LocalEntity()
     }
 
     /**
@@ -38,7 +45,7 @@ export class MessagoServer {
 
         // WebSocket connection event
         ws.on('connection', (socket: any) => {
-            let client = new WSClient(socket)
+            let client = new WSClient(socket, this.entity)
             this.clients.push(client)
         })
 

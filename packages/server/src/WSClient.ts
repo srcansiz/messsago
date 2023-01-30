@@ -1,7 +1,8 @@
 import {WebSocketClient} from "./Server";
 import {randomUUID} from "crypto";
 import Validator from "./utils/validator";
-import Controller from "./Controller"
+import Controller from "./Controller";
+import Entity from "./entity/Entity";
 
 type WSClientErrorMessage = {
     t: string,
@@ -16,10 +17,13 @@ export class WSClient {
     private validator: Validator
     private MController: Controller = new Controller()
 
-    constructor(client: WebSocketClient) {
+    protected entity: Entity
+
+    constructor(client: WebSocketClient, entity: Entity) {
         this.id = randomUUID()
         this.client = client
         this.validator = new Validator()
+        this.entity = entity
 
         // Register message handler for client
         this.client.on('message', this.onMessageHandler)
@@ -34,9 +38,7 @@ export class WSClient {
 
         let data = this.validator.validate(message, this.send_error)
 
-        if (data){
-            return this.MController.parse(data)
-        }
+        this.entity.publish("message", data)
     }
 
     /**
