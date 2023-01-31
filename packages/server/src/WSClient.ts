@@ -51,15 +51,21 @@ export class WSClient {
         console.log(event, reason.toString())
     }
 
-    private m = (event: string, ) => {
 
-    }
 
+    /**
+     *
+     * @param message
+     */
     private send = (message: Object | WSClientErrorMessage) => {
         let m = JSON.stringify(message)
         this.client.send(m)
     }
 
+    /**
+     *
+     * @param message
+     */
     private send_error = (message: string) => {
         this.send({t: "error" , m: message})
     }

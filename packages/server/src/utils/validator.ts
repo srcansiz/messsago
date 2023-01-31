@@ -6,7 +6,8 @@ const messageTag: unique symbol = Symbol("MessageTag");
  */
 type MessageData = {
     m: string
-    o: any
+    t: string
+    e: any
 }
 
 /**
