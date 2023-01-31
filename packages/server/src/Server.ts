@@ -53,7 +53,7 @@ export class MessagoServer {
 
         // WebSocket connection event
         this.websocket.on('connection', (socket: any) => {
-            let client = new WSClient(socket)
+            let client = new WSClient(socket, this.entity)
             this.clients.push(client)
         })
 
