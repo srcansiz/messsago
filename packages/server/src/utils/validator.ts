@@ -1,6 +1,3 @@
-import {Message} from "../types";
-import {MessageData} from "../types";
-
 const messageDataTag: unique symbol = Symbol("MessageDataTag");
 const messageTag: unique symbol = Symbol("MessageTag");
 
