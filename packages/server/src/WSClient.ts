@@ -1,7 +1,8 @@
 import {WebSocketClient} from "./Server";
 import {randomUUID} from "crypto";
 import Validator from "./utils/validator";
-
+import Controller from "./Controller";
+import Entity from "./entity/Entity";
 
 type WSClientErrorMessage = {
     t: string,
@@ -14,12 +15,15 @@ export class WSClient {
     public client: WebSocketClient
 
     private validator: Validator
-    private message_types: string[] = ["message", "file", "sound"]
+    private MController: Controller = new Controller()
 
-    constructor(client: WebSocketClient) {
+    protected entity: Entity
+
+    constructor(client: WebSocketClient, entity: Entity) {
         this.id = randomUUID()
         this.client = client
         this.validator = new Validator()
+        this.entity = entity
 
         // Register message handler for client
         this.client.on('message', this.onMessageHandler)
@@ -31,16 +35,10 @@ export class WSClient {
      * @param message {string}
      */
     private onMessageHandler = (message: Buffer) => {
-        let {status, data} = this.validator.validate(message)
-        if(!status){
-            if(typeof data === "string") this.send_error(data)
-            return
-        }
 
-        if(!(data.t in this.message_types)){
-            this.send_error('Unrecognized message type')
-        }
+        let data = this.validator.validate(message, this.send_error)
 
+        this.entity.publish("message", data)
     }
 
     /**
@@ -51,12 +49,11 @@ export class WSClient {
         console.log(event, reason.toString())
     }
 
-
-
     /**
      *
      * @param message
      */
+
     private send = (message: Object | WSClientErrorMessage) => {
         let m = JSON.stringify(message)
         this.client.send(m)
