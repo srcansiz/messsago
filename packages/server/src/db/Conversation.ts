@@ -1,8 +1,0 @@
-
-
-/**
- *
- */
-class Conversation {
-
-}

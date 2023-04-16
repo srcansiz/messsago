@@ -26,6 +26,7 @@
     "url": "https://github.com/sergencansiz/messsago/issues"
   },
   "dependencies": {
-    "@messago/server": "^1.0.0"
+    "@messago/server": "^1.0.0",
+    "dotenv": "^16.0.3"
   }
 }

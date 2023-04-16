@@ -1,24 +1,19 @@
-import EventEmitter from "../utils/EventEmitter";
+import EventEmitter, {EventData} from "../utils/EventEmitter";
 import Entity from "./Entity";
 
 export default class LocalEntity implements Entity {
 
     private topics = new EventEmitter()
 
-
-    constructor() {
-
+    subscribe(topic: string, listener: Function) {
+        this.topics.on(topic, listener)
     }
 
-    subscribe(topic: String, listener: Function) {
-
+    unsubscribe(topic: string, listener?: Function) {
+        this.topics.removeEventListener(topic)
     }
 
-    unsubscribe(topic: String, listener?: Function) {
-
-    }
-
-    publish(topic: String, data: any) {
-
+    publish(topic: string, data: EventData) {
+        this.topics.emit(topic, data)
     }
 }

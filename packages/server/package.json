@@ -31,7 +31,8 @@
   },
   "dependencies": {
     "crypto": "^1.0.1",
-    "mongoose": "^6.8.0",
+    "mongodb": "5.0",
+    "mongoose": "^6.9.2",
     "uuid": "^9.0.0",
     "ws": "^8.8.1"
   }

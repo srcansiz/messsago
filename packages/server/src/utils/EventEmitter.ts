@@ -1,12 +1,12 @@
 /**
  *
  */
-type EventData = {[key: string] : String | number }
+export type EventData = {[key: string] : String | number }
 
 /**
  *
  */
-type TEvents = {[key: string] : Set<(data: EventData) => void>}
+export type TEvents = {[key: string] : Set<Function>}
 
 
 /**
@@ -25,7 +25,7 @@ export default class EventEmitter {
      * @param type
      * @param listener
      */
-    public on(type: string, listener: (data: EventData) => void) {
+    public on(type: string, listener: Function) {
         this.events[type] = this.events[type] || new Set<() => void>()
         this.events[type].add(listener)
     }
